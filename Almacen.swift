@@ -1,31 +1,37 @@
-struct Almacen {
-  var  inventario : [String : Int] = [:]
+struct Almacen : Hashable {
+  var  inventario : [[Producto : Int]]
   //var categorias : [String : Int] = [:]
- // init(){
-   // inventario = []
-  
-  
-
-/* func showProducts(by category: Category){
-    print ("entro a showProducts por categoria")
-    for stock in inventario.keys{
-      if inventario.isInCategory(category: category){
-        print(stock)
+ init(){
+ inventario = []
+ }
+  mutating func removeProducto(producto: Producto, cantidad: Int){
+    var i = 0;
+    for var contador in inventario{
+    if let total = contador[producto]{
+      let total = total - cantidad
+        contador[producto] = total
+        inventario[i] = contador
       }
-    }
-  }*/
+      i += 1
+    } 
+  }
+
 
   func showProducts(){
-    print ("Mostrando el inventario: ", inventario)
-    for (cosa, stock) in inventario {
-      print("\(cosa): \(stock)")
+    print ("Mostrando el inventario: ")
+    for producto in inventario {
+      print(producto)
     }
   }
 
-  mutating func addProducto(producto: String, cantidad: Int){
-    inventario [producto] = cantidad
+  mutating func addProducto(producto: Producto , cantidad: Int){
+    let dicTemp = [producto : cantidad]
+    inventario.append(dicTemp)
   }
 
-   func removeProducts(producto: Producto, cantidad: Int){
+
+   func hash(into hasher: inout Hasher) {
+    hasher.combine(inventario)
   }
+
 }

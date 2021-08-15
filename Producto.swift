@@ -22,5 +22,18 @@ struct Producto: CustomStringConvertible{
     }
     return false
   }
+  
 }
+
+extension Producto: Hashable {
+    static func == (hs: Producto, rhs: Producto) -> Bool {
+        return hs.nombre == rhs.nombre && hs.precio == rhs.precio && hs.desc == rhs.desc 
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(nombre)
+        hasher.combine(precio)
+        hasher.combine(desc)
+    }
+  }
 
